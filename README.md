@@ -1,9 +1,9 @@
 # 🏛️ Sentinel LAI/LGPD  
- Classificação Automática de Pedidos de Acesso à Informação com Dados Pessoais
+## Classificação Automática de Pedidos de Acesso à Informação com Dados Pessoais
 
-1º Hackathon em Controle Social – Desafio Participa DF  
-Edital nº 10/2025 – Controladoria-Geral do Distrito Federal (CGDF)  
-Categoria: Acesso à Informação
+**1º Hackathon em Controle Social – Desafio Participa DF**  
+**Edital nº 10/2025 – Controladoria-Geral do Distrito Federal (CGDF)**  
+**Categoria: Acesso à Informação**
 
 ![Python](https://img.shields.io/badge/Python-3.9%2B-blue?style=flat-square&logo=python)
 ![LGPD](https://img.shields.io/badge/Conformidade-LGPD-critical?style=flat-square)
@@ -11,89 +11,154 @@ Categoria: Acesso à Informação
 
 ---
 
- 📌 Contexto Institucional
+## 📌 Contexto Institucional
 
-No âmbito da Lei de Acesso à Informação (Lei nº 12.527/2011), pedidos classificados como públicos não podem conter dados pessoais, sob pena de violação à Lei Geral de Proteção de Dados – LGPD (Lei nº 13.709/2018).
+No âmbito da **Lei de Acesso à Informação (Lei nº 12.527/2011)**, pedidos classificados como públicos não podem conter dados pessoais, sob pena de violação à **Lei Geral de Proteção de Dados (LGPD – Lei nº 13.709/2018)**.
 
-Na prática, órgãos públicos lidam diariamente com grandes volumes de pedidos textuais, muitos dos quais são marcados como públicos de forma automática ou manual, sem verificação sistemática da presença de dados pessoais.
-
-Este projeto propõe uma solução automatizada de apoio à decisão, capaz de identificar pedidos de acesso à informação que contenham dados pessoais, permitindo sua correta reclassificação como não públicos.
+Este projeto propõe uma solução automatizada de apoio à decisão capaz de identificar pedidos de acesso à informação que contenham dados pessoais, permitindo sua correta reclassificação como não públicos.
 
 ---
 
- 🎯 Objetivo da Solução
+## 🎯 Objetivo da Solução
 
-Desenvolver um modelo de classificação automática que:
+Desenvolver um **modelo automático de classificação** que receba pedidos de acesso à informação em formato textual e indique a presença ou ausência de dados pessoais, conforme os critérios definidos no edital.
 
-- Receba pedidos de acesso à informação em formato textual  
-- Identifique a presença de dados pessoais, conforme definido no edital  
-- Classifique o pedido como:
-- Contém dados pessoais  
-- Não contém dados pessoais  
-
-O sistema foi projetado para execução via linha de comando (CLI), conforme o padrão esperado para avaliação técnica automatizada.
+A solução é executável via **linha de comando (CLI)** e foi projetada para avaliação técnica automatizada.
 
 ---
 
- 🧾 Definição de Dados Pessoais (Escopo do Modelo)
+## 🧾 Escopo de Dados Pessoais
 
-De acordo com o edital, o modelo considera como dados pessoais:
+O modelo considera como dados pessoais:
+- Nome de pessoa natural
+- CPF
+- RG
+- Telefone
+- Endereço de e-mail
+- Informações que permitam identificação direta ou indireta
 
-- Nome de pessoa natural  
-- CPF  
-- RG  
-- Telefone  
-- Endereço de e-mail  
-- Informações que permitam identificação direta ou indireta de pessoa natural  
-
-⚠️ Todos os dados utilizados no projeto são sintéticos, gerados exclusivamente para fins de teste e demonstração.
-
----
-
- 🧠 Arquitetura da Solução
-
-A solução adota uma arquitetura híbrida, priorizando recall elevado, explicabilidade e auditabilidade, características essenciais para uso em contexto governamental.
-
-# 🔹 Camada 1 — Regras Determinísticas (Regex)
-Identificação direta de padrões sensíveis, como:
-- CPF  
-- RG  
-- Telefones  
-- Endereços de e-mail  
-- Matrículas funcionais  
-
-Esta camada reduz falsos negativos críticos.
-
-# 🔹 Camada 2 — Classificação Probabilística (NLP)
-- Vetorização textual via TF-IDF (n-grams)  
-- Classificador linear explicável (Regressão Logística)  
-- Análise de contexto semântico para reduzir falsos positivos  
-
-# 🔹 Estratégia Geral
-- Classificação conservadora  
-- Penalização explícita de falsos negativos  
-- Decisões rastreáveis e justificáveis
+Todos os dados utilizados neste projeto são **sintéticos**, gerados exclusivamente para fins de teste.
 
 ---
 
- 📊 Métricas de Avaliação
+## 🧠 Arquitetura da Solução
 
-O desempenho do modelo é medido conforme o edital, utilizando:
+A solução adota uma **arquitetura híbrida**, composta por:
+- **Camada determinística**: identificação de padrões sensíveis via expressões regulares
+- **Camada probabilística**: análise contextual por NLP (TF-IDF + Regressão Logística)
 
+A estratégia prioriza **alto recall**, reduzindo o risco de falsos negativos.
+
+---
+
+## 📊 Métricas de Avaliação
+
+O modelo é avaliado utilizando:
 - Precisão
 - Recall (Sensibilidade)
 - F1-score
 
-> Estratégia adotada: priorizar Recall, reduzindo o risco de exposição indevida de dados pessoais.
+---
+
+## 🚀 Execução do Projeto (CLI)
+
+### 🔧 Pré-requisitos
+- Python 3.9 ou superior
+- Recomendado: ambiente virtual
 
 ---
 
- 🚀 Execução do Projeto (CLI)
+### 📦 Instalação
 
-# 🔧 Pré-requisitos
-- Python 3.9 ou superior
-- Ambiente virtual recomendado
-
-# 📦 Instalação
-
+```bash
 pip install -r requirements.txt
+
+🧪 Geração de Dados Sintéticos (Opcional)
+
+Para facilitar testes locais, o projeto inclui um gerador de dados sintéticos realistas baseado na biblioteca Faker (pt_BR).
+
+Este passo é opcional e não substitui o dataset oficial fornecido pela CGDF.
+
+python generate_data.py
+
+
+Ao executar este comando:
+
+Um arquivo CSV de pedidos de acesso à informação é gerado
+
+O arquivo é salvo na pasta data/raw/
+
+O dataset contém textos com e sem dados pessoais simulados
+
+▶️ Execução do Modelo de Classificação
+
+Após a instalação (e opcionalmente a geração dos dados), execute:
+
+python evaluate.py
+
+
+Este comando realiza automaticamente:
+
+Carregamento dos dados
+
+Pré-processamento textual
+
+Treinamento do modelo
+
+Inferência dos resultados
+
+Cálculo das métricas (Precisão, Recall e F1-score)
+
+Geração dos artefatos de saída
+
+📤 Saídas Geradas
+
+Os resultados são gerados na pasta data/processed/:
+
+🖥️ Relatório no Terminal
+
+Progresso de execução
+
+Métricas finais
+
+Amostra de pedidos classificados como contendo dados pessoais
+
+📑 Relatório de Auditoria (Excel)
+
+Arquivo .xlsx contendo:
+
+Texto do pedido
+
+Classificação final
+
+Indicação de risco
+
+Estrutura organizada para análise humana
+
+📂 Estrutura do Repositório
+acesso-informacao-lgpd/
+├── data/
+│   ├── raw/                 # Dados brutos (sintéticos ou fornecidos)
+│   └── processed/           # Resultados e relatórios gerados
+├── src/
+│   ├── preprocessing.py     # Limpeza e normalização textual
+│   ├── rules.py             # Padrões regex de dados pessoais
+│   ├── model.py             # Pipeline híbrido (Regras + NLP)
+│   └── reporter.py          # Geração de relatórios
+├── generate_data.py         # Geração de dados sintéticos (opcional)
+├── evaluate.py              # Script principal (CLI)
+├── requirements.txt
+└── README.md
+
+⚖️ Conformidade Legal e Ética
+
+Não são utilizados dados pessoais reais
+
+O modelo atua exclusivamente como apoio à decisão humana
+
+Nenhuma decisão automatizada definitiva é tomada pelo sistema
+
+📌 Observações Finais
+
+Este projeto foi desenvolvido exclusivamente para fins de participação no
+1º Hackathon em Controle Social – Desafio Participa DF, respeitando integralmente as diretrizes do edital.
